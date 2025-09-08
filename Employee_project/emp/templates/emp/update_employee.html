@@ -1,0 +1,53 @@
+{% extends 'emp/base.html' %}
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white shadow-2xl rounded-xl p-8 mt-8">
+  
+  <!-- Title -->
+  <h2 class="text-3xl font-bold text-gray-800 mb-6">Update Employee</h2>
+
+  <!-- Update Form -->
+  <form method="post" class="space-y-6">
+    {% csrf_token %}
+
+    <!-- Name -->
+    <div>
+      <label for="name" class="block text-gray-700 font-medium mb-2">Name</label>
+      <input type="text" id="name" name="name" value="{{ empl.name }}" 
+             class="w-full border border-gray-300 px-4 py-2 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+    </div>
+
+    <!-- Email -->
+    <div>
+      <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
+      <input type="email" id="email" name="email" value="{{ empl.email }}" 
+             class="w-full border border-gray-300 px-4 py-2 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+    </div>
+
+    <!-- Department -->
+    <div>
+      <label for="department" class="block text-gray-700 font-medium mb-2">Department</label>
+      <input type="text" id="department" name="department" value="{{ empl.department }}" 
+             class="w-full border border-gray-300 px-4 py-2 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+    </div>
+
+    <!-- Salary -->
+    <div>
+      <label for="salary" class="block text-gray-700 font-medium mb-2">Salary</label>
+      <input type="number" id="salary" name="salary" value="{{ empl.salary }}" 
+             class="w-full border border-gray-300 px-4 py-2 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-between items-center pt-4">
+      <a href="{% url 'admin_dashboard' %}" 
+         class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg shadow-md transition">
+         Cancel
+      </a>
+      <button type="submit" 
+              class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow-md font-medium transition">
+        Update Employee
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

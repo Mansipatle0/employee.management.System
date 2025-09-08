@@ -1,0 +1,117 @@
+{% extends 'emp/base.html' %}
+
+{% block content %}
+<h2>Dashboard</h2>
+
+<div class="row">
+  <!-- Total Employees -->
+  <div class="col-md-3 mb-3">
+    <div class="card p-3 shadow-sm">
+      <h5>Total Employees</h5>
+      <p>{{ total_employees }}</p>
+    </div>
+  </div>
+
+  <!-- Present Today -->
+  <div class="col-md-3 mb-3">
+    <div class="card p-3 shadow-sm">
+      <h5>Present Today</h5>
+      <p>{{ present_today }}</p>
+    </div>
+  </div>
+
+  <!-- Absent Today -->
+  <div class="col-md-3 mb-3">
+    <div class="card p-3 shadow-sm">
+      <h5>Absent Today</h5>
+      <p>{{ absent_today }}</p>
+    </div>
+  </div>
+
+  <!-- Leaves Approved -->
+  <div class="col-md-3 mb-3">
+    <div class="card p-3 shadow-sm">
+      <h5>Leaves Approved</h5>
+      <p>{{ leaves }}</p>
+    </div>
+  </div>
+
+  <!-- Leaves Pending -->
+  <div class="col-md-3 mb-3">
+    <div class="card p-3 shadow-sm">
+      <h5>Leaves Pending</h5>
+      <p>{{ pending_leaves }}</p>
+    </div>
+  </div>
+
+  <!-- Late Employees -->
+  <div class="col-md-3 mb-3">
+    <div class="card p-3 shadow-sm">
+      <h5>Late Employees</h5>
+      <p>{{ late_employees_count }}</p>
+    </div>
+  </div>
+
+  <!-- Attendance Percentage -->
+  <div class="col-md-3 mb-3">
+    <div class="card p-3 shadow-sm">
+      <h5>Attendance %</h5>
+      <p>{{ attendance_percentage }}</p>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Apply Leave -->
+    <div class="col-md-3 mb-3">
+      <div class="card p-3 shadow-sm text-center">
+        <h5>Apply for Leave</h5>
+        <a href="{% url 'apply_leave' employee.id %}" class="btn btn-primary btn-sm mt-2">
+          Apply
+        </a>
+      </div>
+    </div>
+
+    <!-- Check Status -->
+    <div class="col-md-3 mb-3">
+      <div class="card p-3 shadow-sm text-center">
+        <h5>Check Leave Status</h5>
+        <a href="{% url 'my_leaves' employee.id %}" class="btn btn-success btn-sm mt-2">
+          View Status
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<h2>Department-wise Employees (Role)</h2>
+
+<!-- JSON data for JS chart -->
+{{ dept_names|json_script:"dept-names" }}
+{{ dept_totals|json_script:"dept-totals" }}
+
+<!-- Pie chart canvas -->
+<canvas id="deptChart"></canvas>
+
+<script>
+    // Parse JSON data from template
+    var deptNames = JSON.parse(document.getElementById('dept-names').textContent);
+    var deptTotals = JSON.parse(document.getElementById('dept-totals').textContent);
+
+    // Create Pie Chart
+    new Chart(document.getElementById('deptChart').getContext('2d'), {
+        type: 'pie',
+        data: {
+            labels: deptNames,
+            datasets: [{
+                data: deptTotals,
+                backgroundColor: ['#FF6384','#36A2EB','#FFCE56','#4BC0C0','#9966FF','#FF9F40']
+            }]
+        },
+        options: { responsive: true }
+    });
+</script>
+{% endblock %}

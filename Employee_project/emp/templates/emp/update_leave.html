@@ -1,0 +1,33 @@
+{% extends "emp/base.html" %}
+{% block title %}Update Leave{% endblock %}
+
+{% block content %}
+<div class="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6">
+    <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Update Leave</h2>
+
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        
+        <label class="block font-medium text-gray-700">Start Date</label>
+        {{ form.start_date }}
+        
+        <label class="block font-medium text-gray-700">End Date</label>
+        {{ form.end_date }}
+        
+        <label class="block font-medium text-gray-700">Reason</label>
+        {{ form.reason }}
+        
+        <label class="block font-medium text-gray-700">Leave Type</label>
+        {{ form.leave_type }}
+        
+        <label class="block font-medium text-gray-700">Status</label>
+        {{ form.status }}  <!-- Yeh dropdown dikhayega -->
+
+        <div class="flex justify-end">
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow">
+                Update
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

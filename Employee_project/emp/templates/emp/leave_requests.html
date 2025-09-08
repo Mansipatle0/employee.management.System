@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Pending Leave Requests</h2>
+<table class="table">
+    <tr>
+        <th>Employee</th><th>Reason</th><th>From</th><th>To</th><th>Action</th>
+    </tr>
+    {% for leave in leaves %}
+    <tr>
+        <td>{{ leave.employee }}</td>
+        <td>{{ leave.reason }}</td>
+        <td>{{ leave.from_date }}</td>
+        <td>{{ leave.to_date }}</td>
+        <td>
+            <a href="{% url 'approve_leave' leave.id %}" class="btn btn-success btn-sm">Approve</a>
+            <a href="{% url 'reject_leave' leave.id %}" class="btn btn-danger btn-sm">Reject</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

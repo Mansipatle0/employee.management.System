@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}EMS{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+<!-- Navigation -->
+<nav class="bg-blue-600 text-white p-4 flex justify-between">
+    <span class="font-bold text-xl">EMS System</span>
+    {% if request.user.is_authenticated %}
+        <div>
+            <span class="mr-4">Hello, {{ request.user.username }} ({{ request.user.role }})</span>
+            <a href="{% url 'logout_view' %}" class="bg-red-500 px-3 py-1 rounded hover:bg-red-600">Logout</a>
+        </div>
+    {% endif %}
+</nav>
+
+<div class="container mx-auto p-4">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<!-- Heartbeat JS for tamper-proof attendance -->
+<script>
+function sendHeartbeat() {
+    fetch("{% url 'heartbeat' %}").then(response => response.json()).then(data => console.log('Heartbeat:',data.status));
+}
+setInterval(sendHeartbeat, 60000); // 1 min
+
+</script>
+
+</body>
+</html>
